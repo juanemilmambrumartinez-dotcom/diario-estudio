@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#eff9f5">
+  <meta name="description" content="Registra tus sesiones de estudio y sigue tu constancia día a día.">
+  <title>Diario de Estudio</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page">
+    <header class="page-header">
+      <p class="eyebrow">Un espacio para aprender</p>
+      <h1>Diario de Estudio</h1>
+      <p class="intro">Cada sesión cuenta. Anota lo que has aprendido hoy.</p>
+    </header>
+
+    <section class="streak-panel" aria-labelledby="streak-title">
+      <div>
+        <p class="eyebrow">Tu esfuerzo, paso a paso</p>
+        <h2 id="streak-title">Racha actual</h2>
+        <p id="streak-caption" class="streak-caption" aria-live="polite">Días seguidos estudiando</p>
+      </div>
+      <div class="streak-metrics">
+        <p class="streak-count">
+          <span id="streak-count" aria-hidden="true">0</span>
+          <span id="streak-count-announcement" class="visually-hidden" aria-live="polite"></span>
+        </p>
+        <div class="best-streak">
+          <span class="best-streak-label">Mejor racha</span>
+          <strong id="best-streak-count">0</strong>
+        </div>
+        <div class="best-streak">
+          <span class="best-streak-label">Minutos esta semana</span>
+          <strong id="weekly-minutes" aria-live="polite">0 min</strong>
+        </div>
+        <div class="best-streak">
+          <span class="best-streak-label">Días estudiados este mes</span>
+          <strong id="monthly-study-days" aria-live="polite">0</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="weekly-goal-section" aria-labelledby="weekly-goal-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Tu próximo paso</p>
+          <h2 id="weekly-goal-title">Objetivo semanal</h2>
+        </div>
+      </div>
+      <p id="weekly-goal-invitation">Define cuántos minutos quieres estudiar cada semana.</p>
+      <form id="weekly-goal-form" novalidate>
+        <label for="weekly-goal-minutes">Minutos por semana</label>
+        <div class="minutes-field">
+          <input id="weekly-goal-minutes" name="weeklyGoalMinutes" type="number" min="1" step="1" placeholder="120" required aria-describedby="weekly-goal-message">
+          <span>min</span>
+        </div>
+        <p id="weekly-goal-message" class="form-message" role="alert" aria-live="polite"></p>
+        <button type="submit">Guardar objetivo</button>
+      </form>
+      <div id="weekly-goal-progress" aria-live="polite" hidden>
+        <div id="weekly-goal-meter" class="weekly-goal-meter" role="progressbar" aria-label="Progreso del objetivo semanal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <span class="weekly-goal-fill"></span>
+        </div>
+        <p><strong id="weekly-goal-current">0</strong> min de <strong id="weekly-goal-target">0</strong> min esta semana (<strong id="weekly-goal-percent">0</strong>%).</p>
+        <p id="weekly-goal-status"></p>
+        <span class="goal-spark goal-spark--one" aria-hidden="true"></span>
+        <span class="goal-spark goal-spark--two" aria-hidden="true"></span>
+      </div>
+    </section>
+
+    <section class="heat-map-section" aria-labelledby="heat-map-title">
+      <div class="section-heading heat-map-heading">
+        <div>
+          <p class="eyebrow">Tu constancia</p>
+          <h2 id="heat-map-title">Actividad de estudio</h2>
+          <p class="heat-map-description">Cada columna representa una semana; cada fila, un día.</p>
+        </div>
+      </div>
+
+      <ul class="heat-map-legend" aria-label="Niveles de actividad">
+        <li>
+          <span class="heat-map-swatch heat-map-cell--empty" aria-hidden="true"></span>
+          <span>Sin actividad</span>
+        </li>
+        <li>
+          <span class="heat-map-swatch heat-map-cell--level-1" aria-hidden="true"></span>
+          <span>Nivel 1</span>
+        </li>
+        <li>
+          <span class="heat-map-swatch heat-map-cell--level-2" aria-hidden="true"></span>
+          <span>Nivel 2</span>
+        </li>
+        <li>
+          <span class="heat-map-swatch heat-map-cell--level-3" aria-hidden="true"></span>
+          <span>Nivel 3</span>
+        </li>
+        <li>
+          <span class="heat-map-swatch heat-map-cell--level-4" aria-hidden="true"></span>
+          <span>Nivel 4</span>
+        </li>
+      </ul>
+
+      <div class="heat-map-layout">
+        <div class="heat-map-weekdays" aria-hidden="true">
+          <span>Lun</span>
+          <span>Mar</span>
+          <span>Mié</span>
+          <span>Jue</span>
+          <span>Vie</span>
+          <span>Sáb</span>
+          <span>Dom</span>
+        </div>
+        <div id="heat-map-grid" class="heat-map-grid" role="group"
+          aria-label="Mapa de actividad de estudio por semanas y días"></div>
+      </div>
+
+      <p id="heat-map-detail" class="heat-map-detail" aria-live="polite">
+        Selecciona un día del mapa para consultar sus detalles.
+      </p>
+      <p id="heat-map-empty" class="heat-map-empty" hidden>
+        Aún no hay sesiones en estas semanas. Registra una sesión para empezar a llenar tu mapa.
+      </p>
+    </section>
+
+    <div class="content-grid">
+      <section class="form-section" aria-labelledby="form-title">
+        <div class="section-heading">
+          <p class="eyebrow">Añade una sesión</p>
+          <h2 id="form-title">Registrar una sesión</h2>
+        </div>
+        <form id="session-form" novalidate>
+          <label for="session-date">Fecha</label>
+          <input id="session-date" name="date" type="date" required>
+
+          <label for="session-topic">Tema</label>
+          <input id="session-topic" name="topic" type="text" maxlength="120" placeholder="Por ejemplo, ecuaciones" required>
+
+          <label for="session-minutes">Minutos</label>
+          <div class="minutes-field">
+            <input id="session-minutes" name="minutes" type="number" min="0" step="any" placeholder="25" required>
+            <span>min</span>
+          </div>
+
+          <p id="form-message" class="form-message" role="alert" aria-live="polite"></p>
+          <button type="submit">Guardar sesión</button>
+        </form>
+      </section>
+
+      <section class="sessions-section" aria-labelledby="sessions-title">
+        <div class="section-heading sessions-heading">
+          <div>
+            <p class="eyebrow">Lo que has aprendido</p>
+            <h2 id="sessions-title">Sesiones</h2>
+          </div>
+          <span id="session-total" class="session-total">0</span>
+        </div>
+        <p id="session-message" class="form-message" role="alert" aria-live="polite"></p>
+        <ul id="session-list" class="session-list" aria-live="polite"></ul>
+      </section>
+    </div>
+  </main>
+  <script src="logic.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
